@@ -25,11 +25,16 @@ public class First_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(First_Activity.this, Second_Activity.class);
+                Toast.makeText(getApplicationContext(), "this is toast message", Toast.LENGTH_SHORT).show();
 
                 intent.putExtra("activityone", "I am from first activity");
 
                 startActivityForResult(intent, REQUEST_CODE);
-
+                Intent returnIntent = getIntent();
+                returnIntent.putExtra("returnData1", "From first activity");
+                returnIntent.putExtra("somethingElse1", "This is something else");
+                setResult(RESULT_OK, returnIntent);
+                finish();
             }
         });
     }
@@ -39,7 +44,7 @@ public class First_Activity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 String result = data.getStringExtra("returnData");
-                Toast.makeText(this,result,Toast.LENGTH_LONG).show();
+                Toast.makeText(this, result, Toast.LENGTH_LONG).show();
 
             }
         }

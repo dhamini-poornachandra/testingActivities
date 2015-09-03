@@ -8,19 +8,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class Second_Activity extends AppCompatActivity {
     private TextView textview;
     private Button goback;
+    static final int REQUEST_CODE = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second_);
         textview = (TextView) findViewById(R.id.textView);
-goback = (Button) findViewById(R.id.button2);
+        goback = (Button) findViewById(R.id.button2);
         Bundle extras = getIntent().getExtras();
-        if (extras != null){
+        if (extras != null) {
             String mystring = extras.getString("activityone");
 
             textview.setText(mystring);
@@ -29,14 +31,24 @@ goback = (Button) findViewById(R.id.button2);
             @Override
             public void onClick(View v) {
                 Intent returnIntent = getIntent();
-                returnIntent.putExtra("returnData","From second activity");
-                returnIntent.putExtra("somethingElse","This is something else");
-                setResult(RESULT_OK,returnIntent);
+                returnIntent.putExtra("returnData", "From second activity");
+                returnIntent.putExtra("somethingElse", "This is something else");
+                setResult(RESULT_OK, returnIntent);
                 finish();
             }
         });
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                String result = data.getStringExtra("returnData1");
+                Toast.makeText(this, result, Toast.LENGTH_LONG).show();
 
+            }
+        }
+
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
